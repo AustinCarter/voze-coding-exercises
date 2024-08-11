@@ -1,0 +1,7 @@
+- The program outputs a list of incorrectly spelled words. [x]
+- For each misspelled word, the program outputs a list of suggested words. []
+- The program includes the line and column number of the misspelled word.[]
+- The program prints the misspelled word along with some surrounding context. []
+- The program handles proper nouns (person or place names, for example) correctly. [x]
+
+- better handling of proper noun vs. first word in a sentence
