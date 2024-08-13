@@ -6,8 +6,9 @@
 
 - better input validation []
 - handle punctuation  , . ; : ! ? [x]
-- fix make file/build system []
+- fix make file/build system [x]
 - reorg code []
+- writeup []
 
 limitations:
 -  handling of proper noun vs. first word in a sentence:
