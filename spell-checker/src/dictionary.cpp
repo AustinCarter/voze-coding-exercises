@@ -1,5 +1,6 @@
 #include "dictionary.h"
 #include <fstream>
+#include <iostream>
 
 bool isCapitalized(const std::string& word) {
     if(!std::isupper(word[0]))
@@ -10,6 +11,11 @@ bool isCapitalized(const std::string& word) {
         }
     }
     return true;
+}
+
+const std::vector<char> punctuation = {',', '.', '"', '?', '!', ':', ';'};
+bool isPunctuation(const char c) {
+    return std::find(punctuation.begin(), punctuation.end(), c) != punctuation.end();
 }
 
 std::string toLower(const std::string& word) {
@@ -34,7 +40,11 @@ namespace Spellchecker {
     Dictionary::Dictionary() {}
 
     bool Dictionary::check(const std::string& word) {
-        return words.find(toLower(word)) != words.end() || isCapitalized(word);
+        std::string w = word;
+        if(isPunctuation(w[w.length()-1])) {
+            w = word.substr(0, w.length()-1);
+        }
+        return words.find(toLower(w)) != words.end() || isCapitalized(w);
     }
     
     void Dictionary::parseDictionary(const std::string& filename) {

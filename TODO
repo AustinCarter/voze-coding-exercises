@@ -6,5 +6,7 @@
 
 - better input validation
 - better handling of proper noun vs. first word in a sentence
-- handle punctuation
-- handle plurals
+- handle punctuation  , . ; : ! ?*
+- fix make file/build system
+- handle possesives 's
+- reorg code

@@ -10,9 +10,9 @@ void getContext(std::vector<std::string> &line, int index, std::string &res) {
     int end = std::min((int)line.size(), index + 2);
 
     for(int i = start; i < end; i++) {
-        if(i == index) res += "\033[31m\033[4m";
+        if(i == index) res += "\033[31m\033[4m"; // underline and set color to red
         res += line[i];
-        if(i == index) res += "\033[24m\033[0m";
+        if(i == index) res += "\033[24m\033[0m"; // reset color and end underline
         res += ' ';
     }
 }
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
                 if (!dictionary.check(word)) {
                     misspellings.push_back(word);
                     getContext(tokenizedLine, wordIndex, context);
-                    printf("misspelled %s: row %d, col: %d \n \t %s\n", word.c_str(), cursorRow, cursorCol, context.c_str());
+                    printf("row %d, col: %d \t %s\n", cursorRow, cursorCol, context.c_str());
                     context.clear();
                 }
                 wordIndex++;
