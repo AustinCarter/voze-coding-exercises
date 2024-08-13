@@ -4,16 +4,6 @@
 #include "util.h"
 
 namespace Spellchecker {
-    TrieNode::TrieNode() : terminal(false) {}
-
-    void TrieNode::addChild(char c) {
-        children[c] = new TrieNode();
-    }
-
-    TrieNode* TrieNode::getChild(char c) {
-        return children[c];
-    }
-
     Dictionary::Dictionary() {}
 
     bool Dictionary::check(const std::string& word) {
@@ -42,14 +32,5 @@ namespace Spellchecker {
 
     void Dictionary::addWord(const std::string& word) {
         words.insert(toLower(word));
-        TrieNode* current = &root;
-        for (char c : word) {
-            char lower = std::tolower(c);
-            if (current->getChild(lower) == nullptr) {
-                current->addChild(lower);
-            }
-            current = current->getChild(lower);
-        }
-        current->setTerminal(true);
     }
 }

@@ -52,6 +52,14 @@ namespace Spellchecker {
 
    std::vector<std::string>* AutoCorrect::getRecommendations(const std::string &word) {
 
+        std::string w = word;
+        while(isPunctuation(w[w.length()-1])) {
+            w = w.substr(0, w.length()-1);
+        }
+        while(isPunctuation(w[0])) {
+            w = w.substr(1);
+        }
+
         std::tuple<int, Node*> heap[NUM_RECS];
         int heapIndex = 0;
 
@@ -59,13 +67,13 @@ namespace Spellchecker {
         stack.push_back(this->root);
         Node *curr;
 
-        int tol = std::min(TOLERENCE, (int)word.length());
+        int tol = std::min(TOLERENCE, (int)w.length());
 
         while(stack.size() > 0) {
            curr = stack.back();
            stack.pop_back();
 
-           int dist = editDistance(curr->getWord(), word);
+           int dist = editDistance(curr->getWord(), w);
 
             if(dist <= tol) {
                 if(heapIndex < NUM_RECS) {

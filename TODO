@@ -12,8 +12,14 @@
 
 limitations:
 -  handling of proper noun vs. first word in a sentence:
+
 - contractions (unless explicitly specified)
 - no transposition in edit distance
 - distance of keys from eachother not considered in autocorrect
 - have to read input text by line to make cursor position computable
 - building BK-tree is slow
+- one byte characters
+
+
+- we are iterating the file twice, could do one pass and init both structures
+- we could cache results for commonly seen misspellings
