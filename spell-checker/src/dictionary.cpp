@@ -13,7 +13,7 @@ bool isCapitalized(const std::string& word) {
     return true;
 }
 
-const std::vector<char> punctuation = {',', '.', '"', '?', '!', ':', ';'};
+const std::vector<char> punctuation = {',', '.', '"', '?', '!', ':', ';', '(', ')', '-', '^', '{', '}', '[', ']'};
 bool isPunctuation(const char c) {
     return std::find(punctuation.begin(), punctuation.end(), c) != punctuation.end();
 }
@@ -41,9 +41,13 @@ namespace Spellchecker {
 
     bool Dictionary::check(const std::string& word) {
         std::string w = word;
-        if(isPunctuation(w[w.length()-1])) {
-            w = word.substr(0, w.length()-1);
+        while(isPunctuation(w[w.length()-1])) {
+            w = w.substr(0, w.length()-1);
         }
+        while(isPunctuation(w[0])) {
+            w = w.substr(1);
+        }
+        if(w.length() == 0) return true;
         return words.find(toLower(w)) != words.end() || isCapitalized(w);
     }
     
