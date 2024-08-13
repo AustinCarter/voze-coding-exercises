@@ -31,6 +31,8 @@ namespace Spellchecker {
 
     private:
         void add(const std::string &word);
+        void trickleDown(std::tuple<int, Node*> *heap);
+        void bubbleUp(std::tuple<int, Node*> *heap, int index);
         Node *root; 
     };
 }

@@ -65,46 +65,18 @@ namespace Spellchecker {
            curr = stack.back();
            stack.pop_back();
 
-        //    if(!curr) return recs;
-
            int dist = editDistance(curr->getWord(), word);
 
             if(dist <= tol) {
                 if(heapIndex < NUM_RECS) {
                     heap[heapIndex] = std::make_tuple(dist, curr);
 
-                    int i = heapIndex;
-                    while((i/2)-1 > 0 && std::get<0>(heap[(i/2)-1]) < std::get<0>(heap[i])) {
-                        int parentI = (i/2)-1;
-                        auto n = heap[i];
-                        heap[i] = heap[parentI];
-                        heap[parentI] = n;
-                        i = parentI;
-                    }
-
+                    bubbleUp(heap, heapIndex);
                     heapIndex++;
                 } else if(dist < std::get<0>(heap[0])) {
                     heap[0] = std::make_tuple(dist, curr);
-                    int i = 0;
-                    while(i * 2 + 1 < NUM_RECS) {
-                        int leftIndex = i * 2 + 1;
-                        int rightIndex = i * 2 + 2;
-
-                        auto n = heap[i];
-                        int largeChild = leftIndex;
-
-                        if(rightIndex < NUM_RECS && std::get<0>(heap[rightIndex]) > std::get<0>(heap[largeChild])) {
-                            largeChild = rightIndex;
-                        }
-
-                        if(std::get<0>(heap[i]) > std::get<0>(heap[largeChild])) break;
-                        heap[i] = heap[largeChild];
-                        heap[largeChild] = n;
-                        i = largeChild;
-                    }
+                    trickleDown(heap);
                 }
-                // recs->push_back(curr->getWord());
-                // printf("adding rec %s for word %s\n", curr->getWord().c_str(), word.c_str());
             }
 
             // any node within [dist - TOLERENCE, dist + TOLERENCE] could be within the tolerence of our misspelling
@@ -123,9 +95,40 @@ namespace Spellchecker {
         for(auto &t : heap) {
             Node* n;
             std::tie(std::ignore, n) = t;
-            recs->push_back(n->getWord());
+            if(n) recs->push_back(n->getWord());
         }
 
         return recs;
+   }
+
+   void AutoCorrect::trickleDown(std::tuple<int, Node*> *heap) {
+        int i = 0;
+        while(i * 2 + 1 < NUM_RECS) {
+            int leftIndex = i * 2 + 1;
+            int rightIndex = i * 2 + 2;
+
+            auto n = heap[i];
+            int largeChild = leftIndex;
+
+            if(rightIndex < NUM_RECS && std::get<0>(heap[rightIndex]) > std::get<0>(heap[largeChild])) {
+                largeChild = rightIndex;
+            }
+
+            if(std::get<0>(heap[i]) > std::get<0>(heap[largeChild])) break;
+            heap[i] = heap[largeChild];
+            heap[largeChild] = n;
+            i = largeChild;
+        }
+   }
+
+   void AutoCorrect::bubbleUp(std::tuple<int, Node*> *heap, int index) {
+        int i = index;
+        while((i/2)-1 > 0 && std::get<0>(heap[(i/2)-1]) < std::get<0>(heap[i])) {
+            int parentI = (i/2)-1;
+            auto n = heap[i];
+            heap[i] = heap[parentI];
+            heap[parentI] = n;
+            i = parentI;
+        }
    }
 }

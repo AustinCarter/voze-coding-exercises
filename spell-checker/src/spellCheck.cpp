@@ -6,18 +6,6 @@
 #include "autoCorrect.h"
 
 
-void getContext(std::vector<std::string> &line, int index, std::string &res) {
-    int start = std::max(index - 2, 0);
-    int end = std::min((int)line.size(), index + 2);
-
-    for(int i = start; i < end; i++) {
-        if(i == index) res += "\033[31m\033[4m"; // underline and set color to red
-        res += line[i];
-        if(i == index) res += "\033[24m\033[0m"; // reset color and end underline
-        res += ' ';
-    }
-}
-
 // <path to your program> dictionary.txt file-to-check.txt
 int main(int argc, char *argv[])
 {
@@ -51,8 +39,8 @@ int main(int argc, char *argv[])
                 if (!dictionary.check(word)) {
                     misspellings.push_back(word);
                     Spellchecker::getContext(tokenizedLine, wordIndex, context);
-                    printf("row %d, col: %d \t %s \t\n", cursorRow, cursorCol, context.c_str());
                     std::vector<std::string> *recs = autoCorrect.getRecommendations(word);
+                    printf("row %d, col: %d \t %s \t\n", cursorRow, cursorCol, context.c_str());
                     std::cout << "\tsuggestions: ";
                     for(auto &rec : *recs) {
                         std::cout <<  "\033[32m\033[4m" << rec << "\033[24m\033[0m " ;
