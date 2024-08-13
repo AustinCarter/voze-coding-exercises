@@ -2,6 +2,7 @@
 #include <fstream>
 
 #include "dictionary.h"
+#include "autoCorrect.h"
 #include "util.h"
 
 
@@ -29,6 +30,8 @@ int main(int argc, char *argv[])
     Spellchecker::Dictionary dictionary;
     dictionary.parseDictionary(argv[1]);
 
+    Spellchecker::AutoCorrect autoCorrect(argv[1]);
+
     std::vector<std::string> misspellings;
 
     std::ifstream text(argv[2]);
@@ -48,7 +51,14 @@ int main(int argc, char *argv[])
                 if (!dictionary.check(word)) {
                     misspellings.push_back(word);
                     getContext(tokenizedLine, wordIndex, context);
-                    printf("row %d, col: %d \t %s\n", cursorRow, cursorCol, context.c_str());
+                    printf("row %d, col: %d \t %s \t\n", cursorRow, cursorCol, context.c_str());
+                    std::vector<std::string> *recs = autoCorrect.getRecommendations(word);
+                    std::cout << "\tsuggestions: ";
+                    for(auto &rec : *recs) {
+                        std::cout <<  "\033[32m\033[4m" << rec << "\033[24m\033[0m " ;
+                    }
+                    std::cout << std::endl;
+
                     context.clear();
                 }
                 wordIndex++;

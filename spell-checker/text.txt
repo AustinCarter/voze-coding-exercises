@@ -1,4 +1,4 @@
 Hello there partner, this is a test file. Howdy there partner, this is how cowboys talk.
 This text is on a new line.
 I cnt spell rihgt, now ^
-I wonder how we will handle parens (these) or braces {check this} []; I hope we do well. end)
+I wonder how we will handle (parentheses) or braces {check this} []; I hope we do well. end)
