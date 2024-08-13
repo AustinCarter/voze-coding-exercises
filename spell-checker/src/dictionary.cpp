@@ -1,30 +1,7 @@
-#include "dictionary.h"
 #include <fstream>
-#include <iostream>
 
-bool isCapitalized(const std::string& word) {
-    if(!std::isupper(word[0]))
-       return false;
-    for (int i = 1; i < word.size(); i++) {
-        if (!std::islower(word[i])) {
-            return false;
-        }
-    }
-    return true;
-}
-
-const std::vector<char> punctuation = {',', '.', '"', '?', '!', ':', ';', '(', ')', '-', '^', '{', '}', '[', ']'};
-bool isPunctuation(const char c) {
-    return std::find(punctuation.begin(), punctuation.end(), c) != punctuation.end();
-}
-
-std::string toLower(const std::string& word) {
-    std::string lower = word;
-    for (int i = 0; i < word.size(); i++) {
-        lower[i] = std::tolower(word[i]);
-    }
-    return lower;
-}
+#include "dictionary.h"
+#include "util.h"
 
 namespace Spellchecker {
     TrieNode::TrieNode() : terminal(false) {}

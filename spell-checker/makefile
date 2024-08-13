@@ -1,4 +1,4 @@
-SRC_FILES = src/dictionary.cpp src/spellCheck.cpp src/autoCorrect.cpp
+SRC_FILES = src/dictionary.cpp src/spellCheck.cpp src/autoCorrect.cpp src/util.cpp
 INCLUDE_DIR = src/
 
 spellcheck: ${SRC_FILES}

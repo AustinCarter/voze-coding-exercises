@@ -1,9 +1,9 @@
 #include <iostream>
 #include <fstream>
 
+#include "util.h"
 #include "dictionary.h"
 #include "autoCorrect.h"
-#include "util.h"
 
 
 void getContext(std::vector<std::string> &line, int index, std::string &res) {
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
             for (std::string &word : tokenizedLine) {
                 if (!dictionary.check(word)) {
                     misspellings.push_back(word);
-                    getContext(tokenizedLine, wordIndex, context);
+                    Spellchecker::getContext(tokenizedLine, wordIndex, context);
                     printf("row %d, col: %d \t %s \t\n", cursorRow, cursorCol, context.c_str());
                     std::vector<std::string> *recs = autoCorrect.getRecommendations(word);
                     std::cout << "\tsuggestions: ";
