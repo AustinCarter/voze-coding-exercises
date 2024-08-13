@@ -86,4 +86,8 @@ namespace Spellchecker
             res += ' ';
         }
     }
+
+    bool checkExtension(const std::string &s, const std::string &ext) {
+        return s.length() > ext.length() && s.substr(s.length()-ext.length()) == ext;
+    }
 }

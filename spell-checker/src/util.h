@@ -14,4 +14,5 @@ namespace Spellchecker
     void splitString(const std::string &s, char delim, std::vector<std::string> &result);
     void joinString(const std::vector<std::string> &words, char delim, std::string &result);
     void getContext(std::vector<std::string> &line, int index, std::string &res);
+    bool checkExtension(const std::string &s, const std::string &ext);
 }
